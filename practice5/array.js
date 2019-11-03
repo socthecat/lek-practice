@@ -1,54 +1,50 @@
 
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
+randomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
+Array.prototype.shuffle = function () {
+    for (let i = this.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
+        [this[i], this[j]] = [this[j], this[i]];
     }
-    return a;
+    return this;
 }
 
-function randomList() {
+randomList = () => {
     let ranList = [];
     for (i = 0; i < (Math.floor(Math.random() * 6) + 1); i++) {
         ranList.push(randomDate(new Date(2010, 2, 17), new Date()));
     }
-    shuffle(ranList);
+    ranList.shuffle();
     return ranList;
 }
 
-function tryparse() {
-    let randomList0 = null;
+tryParse = () => {
+    let temp = null;
     if (localStorage.getItem("list1") === null) {
-        randomList0 = randomList();
-        document.getElementById("list").innerHTML = randomList0;
+        temp = randomList();
+        document.getElementById("list").innerHTML = temp;
     } else {
-        randomList2 = [];
-        randomList0 = JSON.parse(localStorage.getItem("list1"));
-        for (i = 0; i < randomList0.length; i++) {
-            randomList2[i] = new Date(randomList0[i]);
+        temp2 = [];
+        temp = JSON.parse(localStorage.getItem("list1"));
+        for (i = 0; i < temp.length; i++) {
+            temp2[i] = new Date(temp[i]);
         }
-        randomList0 = randomList2;
-        document.getElementById("list").innerHTML = randomList0;
+        temp = temp2;
+        document.getElementById("list").innerHTML = temp;
     }
-    return randomList0;
+    return temp;
 }
 
-let randomList1 = tryparse();
+let randomList1 = tryParse();
 
-function clickShuffle() {
-    shuffle(randomList1);
-    return document.getElementById("list").innerHTML = randomList1;
-}
+clickShuffle = () => document.getElementById("list").innerHTML = randomList1.shuffle();
 
-function clickSort() {
-    randomList1.sort((a, b) => a.getTime() - b.getTime());
-    return document.getElementById("list").innerHTML = randomList1;
-}
+clickSort = () => document.getElementById("list").innerHTML = randomList1.sort((a, b) => a.getTime() - b.getTime());
 
-function clickStore() {
-    localStorage.setItem("list1", JSON.stringify(randomList1));
+clickStore = () => localStorage.setItem("list1", JSON.stringify(randomList1));
+
+clickClear = () => {
+    localStorage.clear();
+    randomList1 = undefined;
+    document.getElementById("list").innerHTML = "You should now refresh the page."
 }
