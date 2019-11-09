@@ -1,5 +1,5 @@
 
-const randomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+const randomDate = () => new Date(Math.floor(Math.random() * 3000), Math.floor(Math.random() * 11),  Math.floor(Math.random() * 31))
 
 Array.prototype.shuffle = function () {
   for (let i = this.length - 1; i > 0; i--) {
@@ -11,8 +11,8 @@ Array.prototype.shuffle = function () {
 
 const randomList = () => {
   const ranList = []
-  for (let i = 0; i < (Math.floor(Math.random() * 6) + 1); i++) {
-    ranList.push(randomDate(new Date(2010, 2, 17), new Date()))
+  for (let i = 0; i < (Math.floor(Math.random() * 50)); i++) {
+    ranList.push(randomDate())
   }
   ranList.shuffle()
   return ranList
